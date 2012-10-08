@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xml:lang="pl">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>style test</title>
+</head>
+<body>
+<h1 style="text-align: center">Style attribute test</h1>
+<!--p>
+    Polish characters: ąśęłóźćż
+</p-->
+<pre>
+&lt;h1 style="text-align: center">Style attribute test&lt;/h1>
+</pre>
+<p>This is a normal paragraph.</p>
+<p style="color:red;text-align:right">This paragraph is red and right-aligned.
+    <br/>
+    <code>&lt;p style="color:red;text-align:right">This paragraph is...&lt;/p></code>
+</p>
+<h2>Writing-mode Example</h2>
+
+<div style="width:12cm; height:7.5cm; border:outset">
+    <p>This block has fixed width and height (12cm x 7.5cm).</p>
+    <p>The following embeded block has tb-rl writing-mode.</p>
+    <div style="writing-mode:tb-rl; height: 5.5cm; width:5.5cm; margin:.5em; border:dotted green">
+        <p>(Here is vertical writing text.)</p>
+        <div style="width:4cm;
+                 margin:.5em; border:dashed blue">
+            <p>(This is the upside down writing block</p>
+        </div>
+    </div>
+</div>
+
+<h2>Table Example</h2>
+
+<table style="border:2px solid; border-collapse:collapse;">
+    <col style="width:3cm;"/>
+    <col style="width:4cm; border:3px dotted green; background-color:yellow"/>
+    <col style="width:2.5cm"/>
+    <col style="width:2.5cm; border:3px dotted red"/>
+    <thead style="background-color:silver; border:6px double blue">
+    <tr>
+        <th>Header-A</th><th>Header-B</th>
+        <th>Header-C</th><th>Header-D</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Cell-A1</td><td style="font-size:200%">Cell-B1</td>
+        <td>Cell-C1</td><td>Cell-D1</td>
+    </tr>
+    <tr style="vertical-align:bottom; border-top:1px solid">
+        <td>Cell-A2</td><td>Cell-B2</td>
+        <td colspan="2" style="font-size:300%">Cell-C2</td>
+    </tr>
+    </tbody>
+</table>
+
+<h4>Source:</h4>
+
+<pre>
+&lt;table style="border:2px solid; border-collapse:collapse;">
+  &lt;col style="width:3cm;"/>
+  &lt;col style="width:4cm; border:3px dotted green; background:yellow"/>
+  &lt;col style="width:2.5cm"/>
+  &lt;col style="width:2.5cm; border:3px dotted red"/>
+  &lt;thead style="background:silver; border:6px double blue">
+    &lt;tr>
+      &lt;th>Header-A&lt;/th>&lt;th>Header-B&lt;/th>
+      &lt;th>Header-C&lt;/th>&lt;th>Header-D&lt;/th>
+    &lt;/tr>
+  &lt;/thead>
+  &lt;tbody>
+    &lt;tr>
+      &lt;td>Cell-A1&lt;/td>&lt;td style="font-size:200%">Cell-B1&lt;/td>
+      &lt;td>Cell-C1&lt;/td>&lt;td>Cell-D1&lt;/td>
+    &lt;/tr>
+    &lt;tr style="vertical-align:bottom; border-top:1px solid">
+      &lt;td>Cell-A2&lt;/td>&lt;td>Cell-B2&lt;/td>
+      &lt;td colspan="2" style="font-size:300%">Cell-C2&lt;/td>
+    &lt;/tr>
+  &lt;/tbody>
+&lt;/table>
+</pre>
+
+
+<p class="note" xml:lang="en"><b>NOTE:</b> HTML's table related attributes (width, border, frame, rules, cellspacing, cellpadding, align, valign, colspan, rowspan) are also available.</p>
+
+<h2>Dynamically inserted text: #{context('name')}</h2>
+
+<h1>Dynamic Chart</h1>
+
+<div style="text-align: center"><svg:svg>#{chart('{name: "chart1", width: 400, height: 400}')}</svg:svg></div>
+
+<h1>Second smaller chart</h1>
+
+<div><svg:svg>#{chart('{name: "chart2", width: 280, height: 280}')}</svg:svg></div>
+
+<div><svg:svg>#{chart('{name: "chart3", width: 400, height: 400}')}</svg:svg></div>
+
+<div><svg:svg>#{chart('{name: "chart4", width: 400, height: 400}')}</svg:svg></div>
+
+<div style="page-break-before:always;
+            position:relative; height:22cm">
+
+    <h2>Absolute Position Example</h2>
+
+    <div style="position:absolute; z-index:-5;
+            right:1cm; top:1.5cm;
+            width:7.5cm; height:5cm;
+            border: 2cm outset aqua;
+            padding: 1mm;">
+        <h4>This div is absolute positioned</h4>
+<pre>
+&lt;div style="position:absolute; z-index:-5;
+            right:0cm; top:1.5cm;
+            width:7.5cm; height:5cm;
+            border: 2cm outset aqua;
+            padding: 1mm;">
+</pre>
+    </div>
+    <div style="position:absolute; z-index:5;
+            left:0cm; top:9cm;
+            width:7.5cm; height:5cm;
+            border: 1.5cm outset lime;
+            padding:1mm;">
+        <h4>This div is absolute positioned</h4>
+<pre>
+&lt;div style="position:absolute; z-index:5;
+            left:0cm; top:9cm;
+            width:7.5cm; height:5cm;
+            border: 1.5cm outset lime;
+            padding 1mm;">
+</pre>
+    </div>
+
+    <div style="position:absolute; z-index:0;
+            left:5cm; top:16cm;
+            width:7.5cm; height:5cm;
+            border:2cm inset fuchsia;
+            padding:1mm;">
+
+        <h4>This div is absolute positioned</h4>
+
+<pre>
+&lt;div style="position:absolute; z-index:0;
+            left:5cm; top:16cm;
+            width:7.5cm; height:5cm;
+            border:2cm inset fuchsia;
+            padding:1mm;">
+</pre>
+    </div>
+
+</div>
+</body>
+</html>
