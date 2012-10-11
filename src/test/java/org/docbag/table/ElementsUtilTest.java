@@ -46,6 +46,7 @@ public class ElementsUtilTest {
         SECOND_LIST_BIG_RESULT.add(new Cell("big"));
         SECOND_LIST_BIG_RESULT.add(new Cell("big2"));
         SECOND_LIST_BIG_RESULT.add(new Cell("big3"));
+        SECOND_LIST_BIG_RESULT.add(new Cell("big4"));
     }
 
     @Test

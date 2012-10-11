@@ -11,7 +11,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 public class RowTest {
-    
+
     private static final List<Cell> cells = new ArrayList<Cell>();
     private static final Map<String, String> style = new HashMap<String, String>();
 
@@ -21,13 +21,13 @@ public class RowTest {
     private static final List<Cell> cellsCombined = new ArrayList<Cell>();
     private static final Map<String, String> styleCombined = new HashMap<String, String>();
 
-    
+
     static {
         cells.add(new Cell("data1"));
         cells.add(new Cell("data2"));
         style.put("border", "1px");
         style.put("padding", "2px");
-        
+
         cellsSecond.add(new Cell("data3"));
         cellsSecond.add(new Cell("data4"));
         cellsSecond.add(new Cell("data5"));
@@ -36,11 +36,12 @@ public class RowTest {
 
         cellsCombined.add(new Cell("data3"));
         cellsCombined.add(new Cell("data4"));
+        cellsCombined.add(new Cell("data5"));
         styleCombined.put("border", "10px");
-        styleCombined.put("padding", "2px");    
+        styleCombined.put("padding", "2px");
         styleCombined.put("text-align", "center");
     }
-    
+
     @Test
     public void testCreateRow() {
         Row row = new Row(cells);

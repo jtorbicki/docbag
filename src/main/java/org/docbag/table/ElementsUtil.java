@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 /**
  * Combines all the elements from two lists together.
  * <p></p>The elements from the second list are combined to the elements
- * from the first list. If the first list is longer than the second, the dontWrap parameter is used to determine
+ * from the first list. If the first list is larger than the second, the dontWrap parameter is used to determine
  * whether the iteration over the second list should restart from the beginning.</p>
  *
  * @author Jakub Torbicki
@@ -30,15 +30,24 @@ public class ElementsUtil {
     public static List<? extends Combinable> combine(List<? extends Combinable> first, List<? extends Combinable> second, boolean dontWrap) {
         if (CollectionUtils.isEmpty(second)) {
             return new ArrayList<Combinable>(first);
+        } else if (CollectionUtils.isEmpty(first)) {
+            return new ArrayList<Combinable>(second);
         }
         Iterator loop = getIterator(second, dontWrap);
-        List<Combinable> r = new ArrayList<Combinable>(first.size());
-        for (Combinable elem : first) {
-            if (loop.hasNext()) {
-                r.add((Combinable) elem.combine(loop.next()));
+        int size = (first.size() > second.size() ? first.size() : second.size());
+        List<Combinable> r = new ArrayList<Combinable>(size);
+        for (int i = 0; i < size; i++) {
+            if (i < first.size()) {
+                Combinable elem = first.get(i);
+                if (loop.hasNext()) {
+                    r.add((Combinable) elem.combine(loop.next()));
+                } else {
+                    r.add(elem);
+                }
             } else {
-                r.add(elem);
+                r.add((Combinable) loop.next());
             }
+
         }
         return r;
     }

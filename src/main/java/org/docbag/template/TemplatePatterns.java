@@ -12,7 +12,7 @@ public class TemplatePatterns {
     /**
      * Embedded expression pattern
      */
-    public static final String EXPRESSION_PATTERN = "^#\\{(.+)\\}$";
+    public static final String EXPRESSION_PATTERN = "#\\{(.+)\\}";
     /**
      * Fetch value from {@link org.docbag.Context} pattern
      */

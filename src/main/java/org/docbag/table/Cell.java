@@ -67,7 +67,11 @@ public class Cell implements Combinable<Cell> {
     }
 
     public Map<String, String> getStyle() {
-        return Collections.unmodifiableMap(style);
+        if (style != null) {
+            return Collections.unmodifiableMap(style);
+        } else {
+            return Collections.unmodifiableMap(Collections.<String, String>emptyMap());
+        }
     }
 
     public boolean equals(Object o) {

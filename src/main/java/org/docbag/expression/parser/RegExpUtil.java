@@ -27,8 +27,10 @@ public class RegExpUtil {
             int end = m.end();
             if (!matchLimited || matchList.size() < limit - 1) {
                 int start = m.start();
-                String match = input.subSequence(index, start).toString();
-                matchList.add(match);
+                if (index != start) {
+                    String match = input.subSequence(index, start).toString();
+                    matchList.add(match);
+                }
                 // add match to the list
                 matchList.add(input.subSequence(start, end).toString());
                 index = end;
