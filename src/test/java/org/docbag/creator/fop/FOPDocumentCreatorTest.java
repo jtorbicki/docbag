@@ -33,6 +33,7 @@ public class FOPDocumentCreatorTest {
     private static final int DOCUMENTS_NUMBER = 100;
     private static final Logger Log = LoggerFactory.getLogger(FOPDocumentCreatorTest.class);
     private static final Context<String, Object> c = createContext();
+    private static final String CONFIG_LOCATION = System.getProperty("user.dir") + "/src/test/resources/config/fop.xml";
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName() throws Exception {
@@ -52,6 +53,11 @@ public class FOPDocumentCreatorTest {
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName4() throws Exception {
         new FOPDocumentCreator(null, null, null).createDocument(getNullTemplate(), new DefaultContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testCreateDocumentEmptyName5() throws Exception {
+        new FOPDocumentCreator(null, null, null, CONFIG_LOCATION).createDocument(getNullTemplate(), new DefaultContext());
     }
 
     @Test
@@ -82,9 +88,9 @@ public class FOPDocumentCreatorTest {
 
     private static PieDataset createPieDataSet() {
         DefaultPieDataset result = new DefaultPieDataset();
-        result.setValue("Linux", 29);
-        result.setValue("Mac", 20);
-        result.setValue("Windows", 51);
+        result.setValue("A", 33);
+        result.setValue("B", 33);
+        result.setValue("C", 34);
         return result;
     }
 
