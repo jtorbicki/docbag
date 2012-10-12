@@ -1,5 +1,6 @@
 package org.docbag;
 
+import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.creator.fop.FOPDocumentCreator;
 import org.docbag.template.DocumentTemplateStream;
 import org.docbag.template.repo.DefaultDocumentTemplateRepository;
@@ -33,7 +34,8 @@ public class DocBag {
      * ({@link DefaultXSLTTemplateTransformer}) and default {@link DocumentTemplateRepository} ({@link DefaultDocumentTemplateRepository})
      */
     public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator() {
-        return new FOPDocumentCreator(new DefaultXSLTTemplateTransformer(), DefaultDocumentTemplateRepository.getInstance());
+        return new FOPDocumentCreator(MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
+            DefaultDocumentTemplateRepository.getInstance(), null);
     }
 
     /**
@@ -45,8 +47,8 @@ public class DocBag {
         if (processExpressions) {
             return newDocumentCreator();
         } else {
-            return new FOPDocumentCreator(new DefaultXSLTTemplateTransformer(new EmptyContentHandlerFactory()),
-                DefaultDocumentTemplateRepository.getInstance());
+            return new FOPDocumentCreator(MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(new EmptyContentHandlerFactory()),
+                DefaultDocumentTemplateRepository.getInstance(), null);
         }
     }
 
@@ -58,7 +60,7 @@ public class DocBag {
      */
     public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(
         TemplateTransformer<DocumentTemplateStream> transformer) {
-        return new FOPDocumentCreator(transformer, DefaultDocumentTemplateRepository.getInstance());
+        return new FOPDocumentCreator(MimeConstants.MIME_PDF, transformer, DefaultDocumentTemplateRepository.getInstance());
     }
 
     /**
@@ -70,7 +72,7 @@ public class DocBag {
      */
     public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(
         TemplateTransformer<DocumentTemplateStream> transformer, DocumentTemplateRepository<DocumentTemplateStream> repository) {
-        return new FOPDocumentCreator(transformer, repository);
+        return new FOPDocumentCreator(MimeConstants.MIME_PDF, transformer, repository);
     }
 
     /**
@@ -84,5 +86,19 @@ public class DocBag {
     public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(String mimeType,
         TemplateTransformer<DocumentTemplateStream> transformer, DocumentTemplateRepository<DocumentTemplateStream> repository) {
         return new FOPDocumentCreator(mimeType, transformer, repository);
+    }
+
+    /**
+     * Creates an instance of {@link FOPDocumentCreator} with the specified output type, specified {@link TemplateTransformer}
+     * and {@link DocumentTemplateRepository}
+     * @see org.apache.xmlgraphics.util.MimeConstants
+     * @param mimeType {@link org.apache.xmlgraphics.util.MimeConstants}
+     * @param transformer instance of {@link TemplateTransformer}
+     * @param repository instance of {@link DocumentTemplateRepository}
+     * @param config document creator specific configuration
+     */
+    public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(String mimeType,
+        TemplateTransformer<DocumentTemplateStream> transformer, DocumentTemplateRepository<DocumentTemplateStream> repository, String config) {
+        return new FOPDocumentCreator(mimeType, transformer, repository, config);
     }
 }

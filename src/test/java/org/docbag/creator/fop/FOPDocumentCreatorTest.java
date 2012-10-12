@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.Context;
 import org.docbag.DefaultContext;
 import org.docbag.chart.jfree.PieChart;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FOPDocumentCreatorTest {
     private static Exception exception = null;
-    private static final FOPDocumentCreator creator = new FOPDocumentCreator(new DefaultXSLTTemplateTransformer(),
+    private static final FOPDocumentCreator creator = new FOPDocumentCreator(MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
         DefaultDocumentTemplateRepository.getInstance());
     private static final String TEMPLATE = "templates/test-template.html";
     private static final int THREADS_NUMBER = 20;
@@ -35,22 +36,22 @@ public class FOPDocumentCreatorTest {
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName() throws Exception {
-        new FOPDocumentCreator(null, null).createDocument("template");
+        new FOPDocumentCreator(null, null, null).createDocument("template");
     }
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName2() throws Exception {
-        new FOPDocumentCreator(null, null).createDocument("template", new DefaultContext());
+        new FOPDocumentCreator(null, null, null).createDocument("template", new DefaultContext());
     }
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName3() throws Exception {
-        new FOPDocumentCreator(null, null).createDocument(getNullTemplate());
+        new FOPDocumentCreator(null, null, null).createDocument(getNullTemplate());
     }
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName4() throws Exception {
-        new FOPDocumentCreator(null, null).createDocument(getNullTemplate(), new DefaultContext());
+        new FOPDocumentCreator(null, null, null).createDocument(getNullTemplate(), new DefaultContext());
     }
 
     @Test

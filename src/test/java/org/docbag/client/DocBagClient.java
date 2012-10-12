@@ -3,13 +3,10 @@ package org.docbag.client;
 import java.awt.*;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.ser.std.MapSerializer;
-import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.Context;
 import org.docbag.DefaultContext;
 import org.docbag.DocBag;
@@ -20,15 +17,12 @@ import org.docbag.chart.jfree.BarChart;
 import org.docbag.chart.jfree.LineChart;
 import org.docbag.chart.jfree.PieChart;
 import org.docbag.chart.jfree.Style;
-import org.docbag.creator.fop.FOPDocumentCreator;
 import org.docbag.table.Cell;
 import org.docbag.table.Row;
 import org.docbag.table.Table;
 import org.docbag.template.DocumentTemplateStream;
 import org.docbag.template.repo.DefaultDocumentTemplateRepository;
 import org.docbag.template.repo.DocumentTemplateRepository;
-import org.docbag.template.transformer.velocity.VelocityTemplateTransformer;
-import org.docbag.template.transformer.xslt.DefaultXSLTTemplateTransformer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
@@ -38,32 +32,9 @@ import org.jfree.data.general.PieDataset;
  */
 public class DocBagClient {
     public void createDocument() throws Exception {
-        DocumentTemplateRepository<DocumentTemplateStream> repo = DefaultDocumentTemplateRepository.getInstance();
         DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator();
-        DocumentCreator<DocumentStream, DocumentTemplateStream> creator2 = new FOPDocumentCreator(
-            MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
-            DefaultDocumentTemplateRepository.getInstance());
-        Context context = getContext();
-        long then = System.currentTimeMillis();
-//        for (int i = 0; i < 1000; i++) {
-        DocumentStream document = creator.createDocument("templates/test-template-big.html", context);
-//        }
-//        System.out.println(System.currentTimeMillis() - then);
+        DocumentStream document = creator.createDocument("templates/test-encoding.html", getContext());
         saveToFile(document);
-    }
-
-    public void createDocument2() throws Exception {
-        DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator();
-        Context context = new DefaultContext();
-        context.put("name", "Friend");
-        DocumentStream document = creator.createDocument("templates/template.html", context);
-    }
-
-    public void createDocument3() throws Exception {
-        DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator();
-        Context context = new DefaultContext();
-        context.put("chart1", new PieChart.Builder(createPieDataSet()).title("Pie Chart").build());
-        DocumentStream document = creator.createDocument("templates/template.html", context);
     }
 
     public static final void main(String[] args) throws Exception {
@@ -90,17 +61,15 @@ public class DocBagClient {
         styles.put("A", new Style(new Color(255, 127, 0)));
         styles.put("B", new Style(new Color(114, 56, 0)));
         styles.put("C", new Style(new Color(255, 255, 255)));
-
         Map<String, Style> styles2 = new HashMap<String, Style>();
         styles2.put("A", new Style(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f)));
-
-        documentContext.put("chart1",
-            new PieChart.Builder(createPieDataSet()).exploded(exploded).title("Pie Chart").styles(styles).build());
+        documentContext.put("chart1", new PieChart.Builder(createPieDataSet()).exploded(exploded).title("Pie Chart").styles(styles).build());
         documentContext.put("chart2", new BarChart.Builder(getBarData()).title("Bar Chart").styles(styles).build());
         documentContext.put("chart3", new LineChart.Builder(getBarData()).title("Line Chart").styles(styles).build());
         documentContext.put("chart4", new AreaChart.Builder(getBarData()).title("Area Chart").styles(styles).build());
         documentContext.put("name", "Friend");
         documentContext.put("table1", createTable());
+        documentContext.put("special", "ąęćłńóśżź");
         return documentContext;
     }
 

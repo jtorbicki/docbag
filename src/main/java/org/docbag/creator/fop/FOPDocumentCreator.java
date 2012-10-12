@@ -1,5 +1,6 @@
 package org.docbag.creator.fop;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.xml.transform.TransformerFactory;
@@ -7,8 +8,8 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.fop.apps.FopFactory;
-import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.Context;
 import org.docbag.DefaultContext;
 import org.docbag.DocumentCreator;
@@ -50,17 +51,20 @@ public class FOPDocumentCreator implements DocumentCreator<DocumentStream, Docum
     private final SAXTransformerFactory tFactory = (SAXTransformerFactory) TransformerFactory.newInstance();
     private final TemplateTransformer<DocumentTemplateStream> templateTransformer;
     private final DocumentTemplateRepository<DocumentTemplateStream> templateRepository;
-
-    public FOPDocumentCreator(TemplateTransformer<DocumentTemplateStream> templateTransformer,
-        DocumentTemplateRepository<DocumentTemplateStream> templateRepository) {
-        this(MimeConstants.MIME_PDF, templateTransformer, templateRepository);
-    }
+    private final String fopConfig;
 
     public FOPDocumentCreator(String mimeType, TemplateTransformer<DocumentTemplateStream> templateTransformer,
         DocumentTemplateRepository<DocumentTemplateStream> templateRepository) {
+        this(mimeType, templateTransformer, templateRepository, null);
+    }
+
+    public FOPDocumentCreator(String mimeType, TemplateTransformer<DocumentTemplateStream> templateTransformer,
+        DocumentTemplateRepository<DocumentTemplateStream> templateRepository, String fopConfig) {
         this.mimeType = mimeType;
         this.templateTransformer = templateTransformer;
         this.templateRepository = templateRepository;
+        this.fopConfig = fopConfig;
+        configure();
     }
 
     public DocumentStream createDocument(DocumentTemplateStream templateStream) {
@@ -108,6 +112,17 @@ public class FOPDocumentCreator implements DocumentCreator<DocumentStream, Docum
             return templateTransformer.transform(templateStream, context);
         }
         return templateStream;
+    }
+
+    private void configure() {
+        if (fopConfig != null) {
+            DefaultConfigurationBuilder cfgBuilder = new DefaultConfigurationBuilder();
+            try {
+                fopFactory.setUserConfig(cfgBuilder.buildFromFile(new File(fopConfig)));
+            } catch (Exception e) {
+                log.error("Error configuring Apache FOP!", e.getLocalizedMessage(), e);
+            }
+        }
     }
 
     public String toString() {
