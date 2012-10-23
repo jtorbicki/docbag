@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.Context;
 import org.docbag.DefaultContext;
 import org.docbag.DocBag;
@@ -21,8 +22,11 @@ import org.docbag.table.Cell;
 import org.docbag.table.Row;
 import org.docbag.table.Table;
 import org.docbag.template.DocumentTemplateStream;
+import org.docbag.template.repo.ClasspathDocumentTemplateRepository;
 import org.docbag.template.repo.DefaultDocumentTemplateRepository;
 import org.docbag.template.repo.DocumentTemplateRepository;
+import org.docbag.template.repo.FileDocumentTemplateRepository;
+import org.docbag.template.transformer.xslt.DefaultXSLTTemplateTransformer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
@@ -31,8 +35,13 @@ import org.jfree.data.general.PieDataset;
  * DocBagClient
  */
 public class DocBagClient {
+
+    private static final String FOP_CONFIG = "src/test/resources/config/fop.xml";
+
     public void createDocument() throws Exception {
-        DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator();
+        DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator(
+            MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
+            new ClasspathDocumentTemplateRepository(), System.getProperty("user.dir") + "/" + FOP_CONFIG);
         DocumentStream document = creator.createDocument("templates/test-encoding.html", getContext());
         saveToFile(document);
     }
