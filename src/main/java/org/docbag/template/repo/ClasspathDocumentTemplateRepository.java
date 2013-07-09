@@ -29,7 +29,7 @@ public class ClasspathDocumentTemplateRepository implements DocumentTemplateRepo
             throw new NullPointerException("Template name can't be null!");
         }
         MemoryOutputStream output = new MemoryOutputStream();
-        InputStream input = ClasspathDocumentTemplateRepository.class.getResourceAsStream("/" + templateName);
+        InputStream input = getClass().getClassLoader().getResourceAsStream(templateName);
         if (input != null) {
             final WritableByteChannel outputChannel = Channels.newChannel(output);
             final ReadableByteChannel inputChannel = Channels.newChannel(input);

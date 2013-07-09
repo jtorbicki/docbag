@@ -5,33 +5,15 @@
     <target-resolution>72</target-resolution>
     <default-page-settings height="297mm" width="210mm"/>
     <renderers>
-
         <renderer mime="application/pdf">
-        </renderer>
-
-        <renderer mime="application/postscript">
-        </renderer>
-
-        <renderer mime="application/vnd.hp-PCL">
-        </renderer>
-
-        <renderer mime="image/svg+xml">
-        </renderer>
-
-        <renderer mime="application/awt">
-        </renderer>
-
-        <renderer mime="image/png">
-        </renderer>
-
-        <renderer mime="image/tiff">
-        </renderer>
-
-        <renderer mime="text/xml">
-        </renderer>
-
-        <renderer mime="text/plain">
-            <pageSize columns="80"/>
+            <filterList>
+                <value>flate</value>
+            </filterList>
+            <fonts>
+                <font metrics-url="font.xml" kerning="yes" embed-url="font.ttf">
+                    <font-triplet name="arial" style="normal" weight="normal"/>
+                </font>
+            </fonts>
         </renderer>
     </renderers>
 </fop>
