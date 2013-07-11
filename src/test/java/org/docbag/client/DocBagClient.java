@@ -13,11 +13,7 @@ import org.docbag.DefaultContext;
 import org.docbag.DocBag;
 import org.docbag.DocumentCreator;
 import org.docbag.DocumentStream;
-import org.docbag.chart.jfree.AreaChart;
-import org.docbag.chart.jfree.BarChart;
-import org.docbag.chart.jfree.LineChart;
-import org.docbag.chart.jfree.PieChart;
-import org.docbag.chart.jfree.Style;
+import org.docbag.chart.jfree.*;
 import org.docbag.table.Cell;
 import org.docbag.table.Row;
 import org.docbag.table.Table;
@@ -27,6 +23,7 @@ import org.docbag.template.repo.DefaultDocumentTemplateRepository;
 import org.docbag.template.repo.DocumentTemplateRepository;
 import org.docbag.template.repo.FileDocumentTemplateRepository;
 import org.docbag.template.transformer.xslt.DefaultXSLTTemplateTransformer;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
@@ -42,7 +39,7 @@ public class DocBagClient {
         DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator(
             MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
             new ClasspathDocumentTemplateRepository(), System.getProperty("user.dir") + "/" + FOP_CONFIG);
-        DocumentStream document = creator.createDocument("templates/test-encoding.html", getContext());
+        DocumentStream document = creator.createDocument("templates/test-chart.html", getContext());
         saveToFile(document);
     }
 
@@ -72,7 +69,8 @@ public class DocBagClient {
         styles.put("C", new Style(new Color(255, 255, 255)));
         Map<String, Style> styles2 = new HashMap<String, Style>();
         styles2.put("A", new Style(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f)));
-        documentContext.put("chart1", new PieChart.Builder(createPieDataSet()).exploded(exploded).title("Pie Chart").styles(styles).build());
+//        documentContext.put("chart1", new PieChart.Builder(createPieDataSet()).exploded(exploded).title("Pie Chart").styles(styles).build());
+        documentContext.put("chart1", new StackedBarChart.Builder(createStackedDataSet()).title("Stacked Chart").styles(styles).build());
         documentContext.put("chart2", new BarChart.Builder(getBarData()).title("Bar Chart").styles(styles).build());
         documentContext.put("chart3", new LineChart.Builder(getBarData()).title("Line Chart").styles(styles).build());
         documentContext.put("chart4", new AreaChart.Builder(getBarData()).title("Area Chart").styles(styles).build());
@@ -80,6 +78,26 @@ public class DocBagClient {
         documentContext.put("table1", createTable());
         documentContext.put("special", "ąęćłńóśżź");
         return documentContext;
+    }
+
+    private CategoryDataset createStackedDataSet() {
+        DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
+        //Enrollment in Bachelors level
+        categoryDataset.setValue(2003, "A", "2005");
+        categoryDataset.setValue(1350, "A", "2006");
+        categoryDataset.setValue(2408, "A", "2007");
+        categoryDataset.setValue(2607, "A", "2008");
+        //Enrollment in Masters level
+        categoryDataset.setValue(985, "B", "2005");
+        categoryDataset.setValue(1400, "B", "2006");
+        categoryDataset.setValue(1634, "B", "2007");
+        categoryDataset.setValue(978, "B", "2008");
+        //Enrollment in PhD level
+        categoryDataset.setValue(356, "C", "2005");
+        categoryDataset.setValue(390, "C", "2006");
+        categoryDataset.setValue(350, "C", "2007");
+        categoryDataset.setValue(687, "C", "2008");
+        return categoryDataset;
     }
 
     private DefaultCategoryDataset getBarData() {

@@ -10,7 +10,7 @@ public interface Chart {
      * Supported chart types
      */
     public enum Type {
-        PieChart, BarChart, LineChart, AreaChart
+        PieChart, BarChart, LineChart, AreaChart, StackedBarChart
     }
 
     /**
