@@ -11,14 +11,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 -->
 
-<xsl:stylesheet version="1.0"
+<xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:svg="http://www.w3.org/2000/svg">
 
     <xsl:output method="xml"
-                version="1.0"
+                version="2.0"
                 encoding="UTF-8"
                 indent="no"/>
 
@@ -57,23 +57,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <!--======================================================================
         Attribute Sets
     =======================================================================-->
-
-    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-         Root
-    =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-->
-
-    <xsl:attribute-set name="root">
-        <xsl:attribute name="writing-mode"><xsl:value-of select="$writing-mode"/></xsl:attribute>
-        <xsl:attribute name="hyphenate"><xsl:value-of select="$hyphenate"/></xsl:attribute>
-        <xsl:attribute name="text-align"><xsl:value-of select="$text-align"/></xsl:attribute>
-        <!-- specified on fo:root to change the properties' initial values -->
-    </xsl:attribute-set>
-
-    <xsl:attribute-set name="page">
-        <xsl:attribute name="page-width"><xsl:value-of select="$page-width"/></xsl:attribute>
-        <xsl:attribute name="page-height"><xsl:value-of select="$page-height"/></xsl:attribute>
-        <!-- specified on fo:simple-page-master -->
-    </xsl:attribute-set>
 
     <xsl:attribute-set name="body">
         <!-- specified on fo:flow's only child fo:block -->
@@ -452,14 +435,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <xsl:attribute name="color">blue</xsl:attribute>
     </xsl:attribute-set>
 
-
     <!--======================================================================
         Templates
     =======================================================================-->
 
+    <xsl:include href="xslt/attributes.xsl"/>
+
     <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
          Root
     =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-->
+
+    <xsl:attribute-set name="root">
+        <xsl:attribute name="writing-mode"><xsl:value-of select="$writing-mode"/></xsl:attribute>
+        <xsl:attribute name="hyphenate"><xsl:value-of select="$hyphenate"/></xsl:attribute>
+        <xsl:attribute name="text-align"><xsl:value-of select="$text-align"/></xsl:attribute>
+        <!-- specified on fo:root to change the properties' initial values -->
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="page">
+        <xsl:attribute name="page-width"><xsl:value-of select="$page-width"/></xsl:attribute>
+        <xsl:attribute name="page-height"><xsl:value-of select="$page-height"/></xsl:attribute>
+        <!-- specified on fo:simple-page-master -->
+    </xsl:attribute-set>
 
     <xsl:template match="html:html">
         <fo:root xsl:use-attribute-sets="root">

@@ -9,11 +9,11 @@
             <filterList>
                 <value>flate</value>
             </filterList>
-            <fonts>
-                <font metrics-url="font.xml" kerning="yes" embed-url="font.ttf">
-                    <font-triplet name="arial" style="normal" weight="normal"/>
-                </font>
-            </fonts>
+            <!--<fonts>-->
+                <!--<font metrics-url="font.xml" kerning="yes" embed-url="font.ttf">-->
+                    <!--<font-triplet name="arial" style="normal" weight="normal"/>-->
+                <!--</font>-->
+            <!--</fonts>-->
         </renderer>
     </renderers>
 </fop>

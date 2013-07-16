@@ -5,16 +5,11 @@ import java.util.Date;
 
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
-import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.fop.apps.FopFactory;
-import org.docbag.Context;
-import org.docbag.DefaultContext;
-import org.docbag.DocumentCreator;
-import org.docbag.DocumentCreatorException;
-import org.docbag.DocumentStream;
+import org.docbag.*;
 import org.docbag.stream.MemoryInputStream;
 import org.docbag.stream.MemoryOutputStream;
 import org.docbag.template.DocumentTemplateStream;
@@ -26,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The default implementation of a {@link DocumentCreator} interface. It uses Apache FOP as a
  * document generation engine.
- *
+ * <p/>
  * <p>The usual document creation flow:</p>
  * <pre>
  * 1. createDocument() method is invoked
@@ -42,24 +37,25 @@ import org.slf4j.LoggerFactory;
  *       in the XSL-FO format.
  * 3. Create a {@link org.docbag.Document}
  * </pre>
+ *
  * @author Jakub Torbicki
  */
 public class FOPDocumentCreator implements DocumentCreator<DocumentStream, DocumentTemplateStream> {
     private static final Logger log = LoggerFactory.getLogger(FOPDocumentCreator.class);
     private final String mimeType;
     private final FopFactory fopFactory = FopFactory.newInstance();
-    private final SAXTransformerFactory tFactory = (SAXTransformerFactory) TransformerFactory.newInstance();
+    private final TransformerFactory tFactory = TransformerFactory.newInstance();
     private final TemplateTransformer<DocumentTemplateStream> templateTransformer;
     private final DocumentTemplateRepository<DocumentTemplateStream> templateRepository;
     private final String fopConfig;
 
     public FOPDocumentCreator(String mimeType, TemplateTransformer<DocumentTemplateStream> templateTransformer,
-        DocumentTemplateRepository<DocumentTemplateStream> templateRepository) {
+                              DocumentTemplateRepository<DocumentTemplateStream> templateRepository) {
         this(mimeType, templateTransformer, templateRepository, null);
     }
 
     public FOPDocumentCreator(String mimeType, TemplateTransformer<DocumentTemplateStream> templateTransformer,
-        DocumentTemplateRepository<DocumentTemplateStream> templateRepository, String fopConfig) {
+                              DocumentTemplateRepository<DocumentTemplateStream> templateRepository, String fopConfig) {
         this.mimeType = mimeType;
         this.templateTransformer = templateTransformer;
         this.templateRepository = templateRepository;
@@ -81,7 +77,7 @@ public class FOPDocumentCreator implements DocumentCreator<DocumentStream, Docum
             DocumentTemplateStream transformed = transformTemplate(templateStream, context);
             // Generate PDF
             tFactory.newTransformer().transform(new StreamSource(transformed.getStream()),
-                new SAXResult(fopFactory.newFop(mimeType, pdf).getDefaultHandler()));
+                    new SAXResult(fopFactory.newFop(mimeType, pdf).getDefaultHandler()));
         } catch (Exception e) {
             log.error("Error creating document: " + e.getLocalizedMessage(), e);
             throw new DocumentCreatorException("Error creating document: " + e.getLocalizedMessage(), e);
@@ -102,7 +98,7 @@ public class FOPDocumentCreator implements DocumentCreator<DocumentStream, Docum
     public DocumentStream createDocument(String templateName, Context context) {
         if (templateRepository == null) {
             throw new NullPointerException("Default template repository not set! If you want to use 'templateName' version of"
-                + " createDocument() then you need to set valid instance of DocumentTemplateRepository");
+                    + " createDocument() then you need to set valid instance of DocumentTemplateRepository");
         }
         return createDocument(templateRepository.findTemplate(templateName), context);
     }
@@ -127,6 +123,6 @@ public class FOPDocumentCreator implements DocumentCreator<DocumentStream, Docum
 
     public String toString() {
         return "FOPDocumentCreator{" +
-            "mimeType='" + mimeType + "\'}";
+                "mimeType='" + mimeType + "\'}";
     }
 }
