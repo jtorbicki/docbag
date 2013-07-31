@@ -64,6 +64,17 @@ public class DocBag {
     }
 
     /**
+     * Creates an instance of {@link FOPDocumentCreator} with the default output type (PDF), default {@link TemplateTransformer}
+     * ({@link DefaultXSLTTemplateTransformer}) and specified {@link DocumentTemplateRepository}
+     *
+     * @param repository instance of {@link DocumentTemplateRepository}
+     */
+    public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(
+            DocumentTemplateRepository<DocumentTemplateStream> repository) {
+        return new FOPDocumentCreator(MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(), repository);
+    }
+
+    /**
      * Creates an instance of {@link FOPDocumentCreator} with the default output type (PDF), specified {@link TemplateTransformer}
      * and {@link DocumentTemplateRepository}
      *
