@@ -4,7 +4,7 @@
 
     <groupId>org.docbag</groupId>
     <artifactId>docbag</artifactId>
-    <version>0.3</version>
+    <version>0.3.2</version>
     <packaging>jar</packaging>
 
     <name>DocBag</name>
