@@ -851,6 +851,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 <xsl:choose>
                     <xsl:when test="contains($s, ';width:') or
                           contains($s, ';height:') or
+                          contains($s, ';reference-orientation:') or
                           contains($s, ';position:absolute') or
                           contains($s, ';position:fixed') or
                           contains($s, ';writing-mode:')">true</xsl:when>
