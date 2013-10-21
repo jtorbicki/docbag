@@ -27,5 +27,6 @@ class DefaultChartAttributes {
     static final float bgAlpha = 1.0f;
     static final Paint bgPaint = Color.white;
     static final Paint plotBgPaint = Color.lightGray;
+    static final boolean gradient = false;
     static final Map<String, Style> styles = Collections.emptyMap();
 }

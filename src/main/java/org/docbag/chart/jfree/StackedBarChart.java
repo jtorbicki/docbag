@@ -23,7 +23,7 @@ import org.jfree.data.category.CategoryDataset;
  *
  * @author Jakub Torbicki
  */
-public class StackedBarChart extends CategoryDataSetChart {
+public class StackedBarChart extends BarChart {
 
     private StackedBarChart(Builder builder) {
         super(Type.StackedBarChart, builder);
@@ -40,7 +40,7 @@ public class StackedBarChart extends CategoryDataSetChart {
         }
     }
 
-    public static class Builder extends CategoryDataSetChart.Builder<StackedBarChart> {
+    public static class Builder extends BarChart.Builder {
         public Builder(CategoryDataset dataSet) {
             super(dataSet);
         }
