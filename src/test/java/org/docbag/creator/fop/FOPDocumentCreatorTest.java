@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 import org.apache.xmlgraphics.util.MimeConstants;
 import org.docbag.Context;
 import org.docbag.DefaultContext;
+import org.docbag.DocBagConfig;
 import org.docbag.chart.jfree.PieChart;
 import org.docbag.template.DocumentTemplateStream;
 import org.docbag.template.repo.DefaultDocumentTemplateRepository;
@@ -57,7 +58,7 @@ public class FOPDocumentCreatorTest {
 
     @Test(expected = NullPointerException.class)
     public void testCreateDocumentEmptyName5() throws Exception {
-        new FOPDocumentCreator(null, null, null, CONFIG_LOCATION).createDocument(getNullTemplate(), new DefaultContext());
+        new FOPDocumentCreator(null, null, null, new DocBagConfig.Builder().withConfig(CONFIG_LOCATION).build()).createDocument(getNullTemplate(), new DefaultContext());
     }
 
     @Test

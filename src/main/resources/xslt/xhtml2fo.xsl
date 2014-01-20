@@ -39,6 +39,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <xsl:param name="page-footer-margin">0.5in</xsl:param>
     <xsl:param name="title-print-in-header">true</xsl:param>
     <xsl:param name="page-number-print-in-footer">true</xsl:param>
+    <xsl:param name="page-number-label">page </xsl:param>
+    <xsl:param name="page-number-of-label"> of </xsl:param>
+    <xsl:param name="page-number-print-total">true</xsl:param>
 
     <!-- multi column -->
     <xsl:param name="column-count">1</xsl:param>
@@ -519,7 +522,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <xsl:template match="html:head | html:script"/>
 
     <xsl:template match="html:body">
-        <fo:page-sequence master-reference="all-pages">
+        <fo:page-sequence id="docbag-last-page" master-reference="all-pages">
             <fo:title>
                 <xsl:value-of select="/html:html/html:head/html:title"/>
             </fo:title>
@@ -537,9 +540,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                           space-after="{$page-footer-margin}"
                           xsl:use-attribute-sets="page-footer">
                     <xsl:if test="$page-number-print-in-footer = 'true'">
-                        <xsl:text>- </xsl:text>
-                        <fo:page-number/>
-                        <xsl:text> -</xsl:text>
+                        <fo:inline><xsl:value-of select="$page-number-label"/></fo:inline>
+                        <fo:inline padding-left="0.3em" padding-right="0.3em"><fo:page-number/></fo:inline>
+                    </xsl:if>
+                    <xsl:if test="$page-number-print-total = 'true'">
+                        <fo:inline><xsl:value-of select="$page-number-of-label"/></fo:inline>
+                        <fo:inline padding-left="0.3em" padding-right="0.3em"><fo:page-number-citation-last ref-id="docbag-last-page"/></fo:inline>
                     </xsl:if>
                 </fo:block>
             </fo:static-content>

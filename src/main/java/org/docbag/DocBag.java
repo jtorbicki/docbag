@@ -109,7 +109,7 @@ public class DocBag {
      * @param config document creator specific configuration
      */
     public static DocumentCreator<DocumentStream, DocumentTemplateStream> newDocumentCreator(String mimeType,
-        TemplateTransformer<DocumentTemplateStream> transformer, DocumentTemplateRepository<DocumentTemplateStream> repository, String config) {
+        TemplateTransformer<DocumentTemplateStream> transformer, DocumentTemplateRepository<DocumentTemplateStream> repository, DocBagConfig config) {
         return new FOPDocumentCreator(mimeType, transformer, repository, config);
     }
 }

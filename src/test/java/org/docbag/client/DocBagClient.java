@@ -8,11 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.xmlgraphics.util.MimeConstants;
-import org.docbag.Context;
-import org.docbag.DefaultContext;
-import org.docbag.DocBag;
-import org.docbag.DocumentCreator;
-import org.docbag.DocumentStream;
+import org.docbag.*;
 import org.docbag.chart.jfree.*;
 import org.docbag.table.Cell;
 import org.docbag.table.Row;
@@ -38,7 +34,7 @@ public class DocBagClient {
     public void createDocument() throws Exception {
         DocumentCreator<DocumentStream, DocumentTemplateStream> creator = DocBag.newDocumentCreator(
             MimeConstants.MIME_PDF, new DefaultXSLTTemplateTransformer(),
-            new ClasspathDocumentTemplateRepository(), System.getProperty("user.dir") + "/" + FOP_CONFIG);
+            new ClasspathDocumentTemplateRepository(), new DocBagConfig.Builder().withConfig(System.getProperty("user.dir") + "/" + FOP_CONFIG).build());
         DocumentStream document = creator.createDocument("templates/test-chart.html", getContext());
         saveToFile(document);
     }
